@@ -471,6 +471,7 @@ GameObject:
   m_Component:
   - component: {fileID: 353858354}
   - component: {fileID: 353858355}
+  - component: {fileID: 353858356}
   m_Layer: 5
   m_Name: Rhythm HB
   m_TagString: Untagged
@@ -527,6 +528,23 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &353858356
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 353858353}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 823d3af0529a46029aaef43abf01c566, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  noteImages:
+  - {fileID: 1138135147}
+  - {fileID: 1146243409}
+  - {fileID: 1510103296}
+  - {fileID: 1584467168}
 --- !u!1 &431086412
 GameObject:
   m_ObjectHideFlags: 0
@@ -749,7 +767,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5893771e93374a5cb0457de5dd646685, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interval: 0.8
+  bpm: 80
   beatSounds:
   - {fileID: 8300000, guid: cc36068b2d5029a4cbc309fb2af6dcfa, type: 3}
   - {fileID: 8300000, guid: cc36068b2d5029a4cbc309fb2af6dcfa, type: 3}
@@ -802,7 +820,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   receivers:
   - {fileID: 431086418}
-  - {fileID: 1550207160}
   runningReceivers: []
   isLocked: 0
 --- !u!4 &1049850146
@@ -1334,7 +1351,7 @@ GameObject:
   - component: {fileID: 1550207163}
   - component: {fileID: 1550207162}
   - component: {fileID: 1550207161}
-  - component: {fileID: 1550207160}
+  - component: {fileID: 1550207165}
   - component: {fileID: 1550207159}
   m_Layer: 0
   m_Name: Cylinder
@@ -1361,21 +1378,6 @@ MonoBehaviour:
   duration: 1
   target: {fileID: 0}
   rotationAmount: {x: 90, y: 0, z: 0}
---- !u!114 &1550207160
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1550207158}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: be2657b3936042a79391c943bfc3b545, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  executables:
-  - {fileID: 1550207159}
-  currentExecutable: {fileID: 0}
 --- !u!136 &1550207161
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1467,6 +1469,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1550207165
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1550207158}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89e3e03dec2945ffbdf31274c1f793fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  executables:
+  - {fileID: 1550207159}
+  currentExecutable: {fileID: 0}
 --- !u!1 &1584467166
 GameObject:
   m_ObjectHideFlags: 0
