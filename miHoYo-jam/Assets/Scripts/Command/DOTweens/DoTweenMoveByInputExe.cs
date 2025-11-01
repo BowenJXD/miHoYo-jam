@@ -29,7 +29,7 @@ public class DoTweenMoveByInputExe : DoTweenBehaviour
     {
         if (move == Vector2.zero) return;
         Vector3 moveVector = new Vector3(move.x, 0, move.y).normalized;
-        Vector3 endPos = target.position + moveVector * duration * scale;
+        Vector3 endPos = target.position + moveVector * (duration * scale);
         tween = DOTween.Sequence().Append(target.DOMove(endPos, duration).SetEase(ease));
     }
 }

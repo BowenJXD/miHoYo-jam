@@ -9,39 +9,39 @@ public class RhythmVignette : MonoBehaviour
     public float fadeSpeed = 0.5f;
     public float maxIntensity = 0.5f;
     
-    Vignette vignette;
-    float fadeVelocity;
+    Vignette _vignette;
+    float _fadeVelocity;
     
     void Start()
     {
         Volume volumeComp = GetComponent<Volume>();
         VolumeProfile profile = volumeComp.sharedProfile;
-        profile.TryGet(out vignette);
+        profile.TryGet(out _vignette);
         RhythmManager.Instance.OnBeat += i => ShowVignette(i, maxIntensity);
     }
     
     // Update is called once per frame
     void Update()
     {
-        if (vignette.intensity.value > 0)
+        if (_vignette.intensity.value > 0)
         {
-            vignette.intensity.value -= fadeVelocity * Time.deltaTime;
-            fadeVelocity += Time.deltaTime;
+            _vignette.intensity.value -= _fadeVelocity * Time.deltaTime;
+            _fadeVelocity += Time.deltaTime;
         }
         else
         {
-            fadeVelocity = fadeSpeed;
+            _fadeVelocity = fadeSpeed;
         }
     }
     
     public void ShowVignette(int index, float intensity)
     {
-        if (RhythmManager.Instance.isBeatFinal) intensity *= 1.5f;
-        vignette.intensity.value = intensity;
+        if (RhythmManager.Instance.IsBeatFinal) intensity *= 1.5f;
+        _vignette.intensity.value = intensity;
     }
     
     private void OnDestroy()
     {
-        if (vignette) vignette.intensity.value = 0;
+        if (_vignette) _vignette.intensity.value = 0;
     }
 }

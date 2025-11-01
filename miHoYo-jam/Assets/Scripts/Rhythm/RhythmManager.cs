@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using DG.Tweening;
 using QFramework;
+using Sirenix.OdinInspector;
 using Unity;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class RhythmManager : MonoSingleton<RhythmManager>
 {
@@ -11,23 +13,27 @@ public class RhythmManager : MonoSingleton<RhythmManager>
     public List<AudioClip> beatSounds = new List<AudioClip>();
     public Action<int> OnBeat;
     public Action OnLoopComplete;
-    public LoopTask loopTask;
-    public int beatCount => beatSounds.Count;
-    public bool isBeatFinal => currentBeat == beatSounds.Count - 1;
     
-    int currentBeat = 0;
-    float interval;
+    [ReadOnly] public float timeSinceLastBeat = 0f;
+    [ReadOnly] public float interval;
+    [ReadOnly] public int currentBeat = 0;
+    
+    public int BeatCount => beatSounds.Count;
+    public bool IsBeatFinal => currentBeat == BeatCount - 1;
 
     private void Start()
     {
         interval = 60f / bpm;
-        loopTask = new LoopTask()
+    }
+
+    private void Update()
+    {
+        timeSinceLastBeat += Time.deltaTime;
+        if (timeSinceLastBeat >= interval)
         {
-            interval = interval,
-            loop = -1,
-            loopAction = Beat
-        };
-        loopTask.Start();
+            timeSinceLastBeat -= interval;
+            Beat();
+        }
     }
 
     public void Beat()

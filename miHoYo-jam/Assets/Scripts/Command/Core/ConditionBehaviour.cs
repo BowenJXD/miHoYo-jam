@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 /// <summary>
@@ -9,7 +10,7 @@ using UnityEngine;
 public abstract class ConditionBehaviour : MonoBehaviour
 {
     public List<ExecutableBehaviour> executables;
-    public ExecutableBehaviour currentExecutable;
+    [ReadOnly] public ExecutableBehaviour currentExecutable;
 
     public Blackboard blackboard;
 

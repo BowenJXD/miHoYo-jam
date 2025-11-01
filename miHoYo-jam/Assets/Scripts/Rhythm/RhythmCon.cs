@@ -7,6 +7,11 @@ public class RhythmCon : ConditionBehaviour
     public override void SetUp()
     {
         base.SetUp();
-        RhythmManager.Instance.OnLoopComplete += () => StartCoroutine(Execute());
+        RhythmManager.Instance.OnLoopComplete += Trigger;
+    }
+
+    public void Trigger()
+    {
+        StartCoroutine(Execute());
     }
 }
