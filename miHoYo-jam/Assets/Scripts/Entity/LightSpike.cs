@@ -6,7 +6,7 @@ using UnityEngine;
 public class LightSpike : MonoBehaviour
 {
     public EColor color;
-    public List<ColorState> conditions;
+    public List<ColorfulBehaviour> conditions;
     public bool anyCondition = false;
     public Animator spikeAni;
     public Collider spikeCollider;
@@ -30,7 +30,7 @@ public class LightSpike : MonoBehaviour
         {
             foreach (var condition in conditions)
             {
-                if (condition.color == color)
+                if (condition.GetColor() == color)
                 {
                     return true;
                 }
@@ -41,7 +41,7 @@ public class LightSpike : MonoBehaviour
         {
             foreach (var condition in conditions)
             {
-                if (condition.color != color)
+                if (condition.GetColor() != color)
                 {
                     return false;
                 }
