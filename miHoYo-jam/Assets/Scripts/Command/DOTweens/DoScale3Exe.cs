@@ -1,7 +1,7 @@
 ﻿using DG.Tweening;
 using UnityEngine;
 
-public class DoTweenScale3Behaviour : DoTweenBehaviour
+public class DoScale3Exe : DoTweenBehaviour
 {
     public Vector3 targetScale;
     

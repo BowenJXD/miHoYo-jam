@@ -8,7 +8,7 @@ public class OnEnableCon : ConditionBehaviour
     protected override void Init()
     {
         base.Init();
-        StartCoroutine(Execute());
+        StartExecute();
     }
 
     public override IEnumerator Execute()

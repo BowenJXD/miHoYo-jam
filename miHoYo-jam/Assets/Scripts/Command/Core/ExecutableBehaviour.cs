@@ -60,13 +60,13 @@ public abstract class ExecutableBehaviour : MonoBehaviour
         OnFinish();
     }
     
-    public virtual void StartExe()
-    {
-        executing = true;
-    }
+    /**
+     * Should not be overridden
+     */
+    public void StartExe() => executing = true;
         
-    public virtual void FinishExe()
-    {
-        executing = false;
-    }
+    /**
+     * Should not be overridden
+     */
+    public void FinishExe() => executing = false;
 }

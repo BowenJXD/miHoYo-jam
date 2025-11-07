@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.Serialization;
 
-public class DoTweenScale1Behaviour : DoTweenBehaviour
+public class DoScale1Exe : DoTweenBehaviour
 {
     public float scaleSpeed;
     public float scaleLimit;

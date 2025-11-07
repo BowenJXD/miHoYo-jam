@@ -8,7 +8,7 @@ using UnityEngine.Pool;
 /// <summary>
 ///  DoTween移动节点
 /// </summary>
-public class DoTweenMoveToBehaviour : DoTweenBehaviour
+public class DoMoveToExe : DoTweenBehaviour
 {
     [HideIf("randomLocation")]
     public Vector3 moveVector;
@@ -50,9 +50,9 @@ public class DoTweenMoveToBehaviour : DoTweenBehaviour
         }
     }
 
-    public override void FinishExe()
+    protected override void OnFinish()
     {
-        base.FinishExe();
+        base.OnFinish();
         if (ani)
         {
             ani.SetBool(isRunning ? "isRunning" : "isMoving", false);

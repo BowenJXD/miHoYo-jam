@@ -3,7 +3,7 @@ using DG.Tweening;
 using Unity;
 using UnityEngine;
 
-public class DoTweenRotateBehaviour : DoTweenBehaviour
+public class DoRotateExe : DoTweenBehaviour
 {
     public Vector3 rotationAmount;
     

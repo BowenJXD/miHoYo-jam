@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using DG.Tweening;
-using QFramework;
 using Sirenix.OdinInspector;
 using Unity;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-public class RhythmManager : MonoSingleton<RhythmManager>
+public class RhythmManager : Singleton<RhythmManager>
 {
     public int bpm = 80;
     public List<AudioClip> beatSounds = new List<AudioClip>();

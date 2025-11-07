@@ -14,7 +14,7 @@ public enum ShakeType
 /// <summary>
 ///  DoTween震动节点
 /// </summary>
-public class DoTweenShakeBehaviour : DoTweenBehaviour
+public class DoShakeExe : DoTweenBehaviour
 {
     public ShakeType shakeType = ShakeType.Position;
     public float strength = 1;

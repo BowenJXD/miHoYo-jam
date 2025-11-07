@@ -5,6 +5,11 @@ public class OnEnterCon : ConditionBehaviour
 {
     private void OnTriggerEnter2D(Collider2D other)
     {
-        StartCoroutine(Execute());
+        StartExecute();
+    }
+    
+    private void OnTriggerEnter(Collider other)
+    {
+        StartExecute();
     }
 }

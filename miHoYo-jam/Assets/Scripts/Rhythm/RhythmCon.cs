@@ -12,6 +12,6 @@ public class RhythmCon : ConditionBehaviour
 
     public void Trigger()
     {
-        StartCoroutine(Execute());
+        StartExecute();
     }
 }

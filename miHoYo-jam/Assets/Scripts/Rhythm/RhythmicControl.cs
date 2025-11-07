@@ -19,6 +19,7 @@ public class RhythmicControl : MonoBehaviour
     public Vector2 moveVector;
     public Ease ease = Ease.OutQuad;
     public Animator ani;
+    public Rigidbody rb;
 
     List<Vector3> _movePositions = new List<Vector3>();
     RhythmManager _rhythmManager;
@@ -31,6 +32,9 @@ public class RhythmicControl : MonoBehaviour
             Debug.LogError("Move Action is not assigned.");
             return;
         }
+
+        if (!ani) ani = GetComponent<Animator>();
+        if (!rb) rb = GetComponent<Rigidbody>();
 
         moveAction.action.performed += OnMove;
         moveAction.action.canceled += OnMove;
@@ -45,6 +49,32 @@ public class RhythmicControl : MonoBehaviour
     {
         moveVector = obj.ReadValue<Vector2>();
         if (obj.canceled) moveVector = Vector2.zero;
+        if (moveVector.x > moveVector.y)
+        {
+            if (moveVector.x > -moveVector.y)
+            {
+                moveVector = Vector2.right;
+            }
+            else
+            {
+                moveVector = Vector2.down;
+            }
+        }
+        else if (moveVector.x < moveVector.y)
+        {
+            if (moveVector.x < -moveVector.y)
+            {
+                moveVector = Vector2.left;
+            }
+            else
+            {
+                moveVector = Vector2.up;
+            }
+        }
+        else
+        {
+            moveVector = Vector2.zero;
+        }
     }
 
     private void Update()
@@ -58,6 +88,7 @@ public class RhythmicControl : MonoBehaviour
                 Quaternion targetRotation = Quaternion.LookRotation(targetDirection, Vector3.up);
                 transform.rotation = Quaternion.Euler(0, targetRotation.eulerAngles.y, 0);
             }
+
             _movedThisBeat = true;
             if (TryMove(out Collider col))
             {
@@ -71,9 +102,10 @@ public class RhythmicControl : MonoBehaviour
                     ani.Play("Interact");
                 }
             }
-            new LoopTask{interval = moveDuration, finishAction = () => _movedThisBeat = false}.Start(this);
 
-            if (_rhythmManager.timeSinceLastBeat <= postTolerance)
+            new LoopTask { interval = moveDuration, finishAction = () => _movedThisBeat = false }.Start(this);
+
+            /*if (_rhythmManager.timeSinceLastBeat <= postTolerance)
             {
                 Debug.Log("Moved after the beat by " + _rhythmManager.timeSinceLastBeat + " seconds.");
             }
@@ -82,7 +114,7 @@ public class RhythmicControl : MonoBehaviour
             {
                 Debug.Log("Moved before the beat by " + (_rhythmManager.interval - _rhythmManager.timeSinceLastBeat) +
                           " seconds.");
-            }
+            }*/
         }
     }
 
@@ -95,8 +127,11 @@ public class RhythmicControl : MonoBehaviour
                 distance * 1.25f))
         {
             col = hit.collider;
-            Debug.Log("Movement blocked by " + hit.collider.name);
-            return false;
+            if (!col.isTrigger)
+            {
+                Debug.Log("Movement blocked by " + hit.collider.name);
+                return false;
+            }
         }
 
         return true;
@@ -109,13 +144,20 @@ public class RhythmicControl : MonoBehaviour
         Vector3 targetDirection = new Vector3(moveVector.x, 0, moveVector.y).normalized;
         Vector3 destination = transform.position + targetDirection * distance;
         destination.y = 0; // keep y level
-        transform
-            .DOMove(destination, moveDuration)
-            .SetEase(ease)
-            .OnComplete(() =>
-            {
-                _movePositions.Add(transform.position);
-            });
+        if (rb)
+        {
+            rb
+                .DOMove(destination, moveDuration)
+                .SetEase(ease)
+                .OnComplete(() => { _movePositions.Add(transform.position); });
+        }
+        else
+        {
+            transform
+                .DOMove(destination, moveDuration)
+                .SetEase(ease)
+                .OnComplete(() => { _movePositions.Add(transform.position); });
+        }
     }
 
     bool IsOnBeat()

@@ -1,12 +1,11 @@
 ﻿using System;
 using DG.Tweening;
-using QFramework;
 using Sirenix.OdinInspector;
 using Unity;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class DoTweenMoveByInputExe : DoTweenBehaviour
+public class DoMoveByInputExe : DoTweenBehaviour
 {
     public float scale = 1f;
     [ShowInInspector] private Vector2 move;
