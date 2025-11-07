@@ -15,6 +15,7 @@ public class RhythmicControl : MonoBehaviour
 
     public float distance = 10f;
     public float moveDuration = 0.3f;
+    public float yValue = 0f;
     public InputActionReference moveAction;
     public Vector2 moveVector;
     public Ease ease = Ease.OutQuad;
@@ -82,7 +83,7 @@ public class RhythmicControl : MonoBehaviour
         if (!_rhythmManager) return;
         if (IsOnBeat() && moveVector != Vector2.zero && !_movedThisBeat)
         {
-            Vector3 targetDirection = new Vector3(moveVector.x, 0, moveVector.y).normalized;
+            Vector3 targetDirection = new Vector3(moveVector.x, yValue, moveVector.y).normalized;
             if (targetDirection != Vector3.zero)
             {
                 Quaternion targetRotation = Quaternion.LookRotation(targetDirection, Vector3.up);
