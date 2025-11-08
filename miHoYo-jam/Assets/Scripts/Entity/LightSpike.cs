@@ -19,12 +19,12 @@ public class LightSpike : MonoBehaviour
 
     private void Update()
     {
-        bool conditionMet = checkCondition();
+        bool conditionMet = CheckCondition();
         spikeAni.SetBool("isOpen", !conditionMet);
         spikeCollider.enabled = !conditionMet;
     }
     
-    public bool checkCondition()
+    public bool CheckCondition()
     {
         if (anyCondition)
         {
