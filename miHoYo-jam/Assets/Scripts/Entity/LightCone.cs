@@ -4,7 +4,7 @@ using Unity;
 using Unity.Collections;
 using UnityEngine;
 
-public class LightCone : ColorfulBehaviour
+public class LightCone : ColorfulBehaviour, ITriggerable
 {
     public List<EColor> colors;
     int _index = 0;
@@ -17,7 +17,7 @@ public class LightCone : ColorfulBehaviour
         RhythmManager.Instance.OnLoopComplete += Trigger;
     }
 
-    private void Trigger()
+    public void Trigger()
     {
         SwitchColor();
     }

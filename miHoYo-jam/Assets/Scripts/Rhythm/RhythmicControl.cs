@@ -5,6 +5,11 @@ using Unity;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+public interface ITriggerable
+{
+    void Trigger();
+}
+
 public class RhythmicControl : MonoBehaviour
 {
     [Tooltip("Seconds allowed to be on-beat prior the beat (able to move)")]
@@ -99,7 +104,7 @@ public class RhythmicControl : MonoBehaviour
             {
                 if (col.CompareTag("Interactable"))
                 {
-                    col.GetComponent<RhythmCon>()?.Trigger();
+                    col.GetComponent<ITriggerable>()?.Trigger();
                     ani.Play("Interact");
                 }
             }

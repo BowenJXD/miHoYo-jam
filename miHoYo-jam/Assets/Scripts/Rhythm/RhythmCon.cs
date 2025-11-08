@@ -2,7 +2,7 @@
 using Unity;
 using UnityEngine;
 
-public class RhythmCon : ConditionBehaviour
+public class RhythmCon : ConditionBehaviour, ITriggerable
 {
     public override void SetUp()
     {
