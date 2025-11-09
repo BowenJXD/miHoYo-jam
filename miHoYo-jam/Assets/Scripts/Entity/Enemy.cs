@@ -22,12 +22,28 @@ public class Enemy : MoveBehaviour
     {
         if (!rc) rc = FindFirstObjectByType<RhythmicControl>();
         if (!ani) ani = GetComponent<Animator>();
+        if (!rb) rb = GetComponent<Rigidbody>();
+        if (!deathScreen)
+        {
+            deathScreen = FindAnyObjectByType<DeathScreen>(FindObjectsInactive.Include)?.gameObject;
+        }
+        delayCount = -delay - 1;
     }
 
     private void OnEnable()
     {
         RhythmManager.Instance.OnBeat += Trigger;
-        delayCount = -delay - 1;
+        if (delayCount > 0)
+        {
+            movedIndex = rc.GetMovedPositionCount() - 1 - delay;
+            transform.position = rc.GetHistoryPosition(movedIndex);
+            movedIndex++;
+        }
+    }
+
+    private void OnDisable()
+    {
+        RhythmManager.Instance.OnBeat -= Trigger;
     }
 
     public void Trigger(int beat)
