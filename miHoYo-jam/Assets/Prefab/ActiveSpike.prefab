@@ -10,8 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8387833808631896108}
   - component: {fileID: 2091504438544134735}
-  - component: {fileID: 7579347922669297846}
-  - component: {fileID: 2426235162035014437}
+  - component: {fileID: 2182282299742316042}
   m_Layer: 0
   m_Name: SpikeCollider
   m_TagString: Untagged
@@ -55,7 +54,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.8, y: 1.8, z: 1.8}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &7579347922669297846
+--- !u!114 &2182282299742316042
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -64,29 +63,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 68536261803631623}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ba0014bb6f6d44dfbc0277cf03bc71b0, type: 3}
+  m_Script: {fileID: 11500000, guid: 756fe1b1d1084bb494f5f1d0719b1457, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lockOnExecuting: 1
-  log: 1
-  executables: []
-  currentExecutable: {fileID: 0}
---- !u!114 &2426235162035014437
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 68536261803631623}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b388dc1df45a4af49af033e7bc95b518, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  skip: 0
-  executing: 0
   duration: 1.6
-  inputControl: {fileID: 0}
 --- !u!1001 &6298576888367831705
 PrefabInstance:
   m_ObjectHideFlags: 0

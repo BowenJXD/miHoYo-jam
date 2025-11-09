@@ -10,7 +10,7 @@ public interface ITriggerable
     void Trigger();
 }
 
-public class RhythmicControl : MonoBehaviour
+public class RhythmicControl : MoveBehaviour
 {
     [Tooltip("Seconds allowed to be on-beat prior the beat (able to move)")]
     public float priorTolerance = 0.2f;
@@ -27,9 +27,11 @@ public class RhythmicControl : MonoBehaviour
     public Animator ani;
     public Rigidbody rb;
 
-    List<Vector3> _movePositions = new List<Vector3>();
+    List<Vector3> _movedPositions = new List<Vector3>();
     RhythmManager _rhythmManager;
-    bool _movedThisBeat = false;
+    private bool detecting = false;
+    private bool movedThisBeat = false;
+    private bool canMove = true;
 
     private void Awake()
     {
@@ -86,16 +88,20 @@ public class RhythmicControl : MonoBehaviour
     private void Update()
     {
         if (!_rhythmManager) return;
-        if (IsOnBeat() && moveVector != Vector2.zero && !_movedThisBeat)
+        if (IsOnBeat() && !detecting)
+        {
+            StartDetecting();
+        }
+        else if (!IsOnBeat() && detecting)
+        {
+            EndDetecting();
+        }
+        if (IsOnBeat() && detecting && !movedThisBeat && canMove && moveVector != Vector2.zero)
         {
             Vector3 targetDirection = new Vector3(moveVector.x, yValue, moveVector.y).normalized;
-            if (targetDirection != Vector3.zero)
-            {
-                Quaternion targetRotation = Quaternion.LookRotation(targetDirection, Vector3.up);
-                transform.rotation = Quaternion.Euler(0, targetRotation.eulerAngles.y, 0);
-            }
+            Quaternion targetRotation = Quaternion.LookRotation(targetDirection, Vector3.up);
+            transform.rotation = Quaternion.Euler(0, targetRotation.eulerAngles.y, 0);
 
-            _movedThisBeat = true;
             if (TryMove(out Collider col))
             {
                 Move();
@@ -108,20 +114,20 @@ public class RhythmicControl : MonoBehaviour
                     ani.Play("Interact");
                 }
             }
-
-            new LoopTask { interval = moveDuration, finishAction = () => _movedThisBeat = false }.Start(this);
-
-            /*if (_rhythmManager.timeSinceLastBeat <= postTolerance)
-            {
-                Debug.Log("Moved after the beat by " + _rhythmManager.timeSinceLastBeat + " seconds.");
-            }
-
-            if (_rhythmManager.timeSinceLastBeat >= _rhythmManager.interval - priorTolerance)
-            {
-                Debug.Log("Moved before the beat by " + (_rhythmManager.interval - _rhythmManager.timeSinceLastBeat) +
-                          " seconds.");
-            }*/
+            movedThisBeat = true;
         }
+    }
+    
+    public void StartDetecting()
+    {
+        detecting = true;
+        movedThisBeat = false;
+        // _movedPositions.Add(transform.position);
+    }
+
+    public void EndDetecting()
+    {
+        detecting = false;
     }
 
     public bool TryMove(out Collider col)
@@ -142,8 +148,9 @@ public class RhythmicControl : MonoBehaviour
 
         return true;
     }
+    
 
-    public void Move()
+    public override void Move()
     {
         ani?.Play("Jump");
         //change facing rotation (z only)
@@ -152,23 +159,36 @@ public class RhythmicControl : MonoBehaviour
         destination.y = 0; // keep y level
         if (rb)
         {
-            rb
-                .DOMove(destination, moveDuration)
-                .SetEase(ease)
-                .OnComplete(() => { _movePositions.Add(transform.position); });
+            rb.DOMove(destination, moveDuration).SetEase(ease).OnComplete(()=> {_movedPositions.Add(transform.position);});
         }
         else
         {
-            transform
-                .DOMove(destination, moveDuration)
-                .SetEase(ease)
-                .OnComplete(() => { _movePositions.Add(transform.position); });
+            transform.DOMove(destination, moveDuration).SetEase(ease).OnComplete(()=> {_movedPositions.Add(transform.position);});
         }
+    }
+
+    public override void SetCanMove(bool canMove)
+    {
+        this.canMove = canMove;
     }
 
     bool IsOnBeat()
     {
         return _rhythmManager.timeSinceLastBeat <= postTolerance ||
                _rhythmManager.timeSinceLastBeat >= _rhythmManager.interval - priorTolerance;
+    }
+
+    public Vector3 GetHistoryPosition(int index)
+    {
+        if (index < _movedPositions.Count)
+        {
+            return _movedPositions[index];
+        }
+        return Vector3.zero;
+    }
+    
+    public int GetMovedPositionCount()
+    {
+        return _movedPositions.Count;
     }
 }

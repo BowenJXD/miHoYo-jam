@@ -7,6 +7,8 @@ public class ActiveSpike : MonoBehaviour
     public Animator spikeAni;
     public Collider spikeCollider;
     
+    LoopTask loopTask;
+    
     private void Awake()
     {
         if (!spikeAni) spikeAni = GetComponent<Animator>();
@@ -20,11 +22,24 @@ public class ActiveSpike : MonoBehaviour
         {
             spikeAni.SetBool("isOpen", false);
             spikeCollider.enabled = false;
+            if (loopTask is { isPlaying: true })
+            {
+                loopTask.Stop();
+            }
+            loopTask = null;
         }
         else
         {
             spikeAni.SetBool("isOpen", true);
-            spikeCollider.enabled = true;
+            if (loopTask == null)
+            {
+                loopTask = new LoopTask
+                {
+                    interval = 0.2f,
+                    finishAction = () => { spikeCollider.enabled = true; }
+                };
+                loopTask.Start();
+            }
         }
     }
 }

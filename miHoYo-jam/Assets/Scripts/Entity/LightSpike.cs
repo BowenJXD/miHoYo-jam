@@ -10,6 +10,7 @@ public class LightSpike : MonoBehaviour
     public bool anyCondition = false;
     public Animator spikeAni;
     public Collider spikeCollider;
+    public LoopTask loopTask;
 
     private void Awake()
     {
@@ -20,10 +21,31 @@ public class LightSpike : MonoBehaviour
     private void Update()
     {
         bool conditionMet = CheckCondition();
-        spikeAni.SetBool("isOpen", !conditionMet);
-        spikeCollider.enabled = !conditionMet;
+        if (conditionMet)
+        {
+            spikeAni.SetBool("isOpen", false);
+            spikeCollider.enabled = false;
+            if (loopTask is { isPlaying: true })
+            {
+                loopTask.Stop();
+            }
+            loopTask = null;
+        }
+        else
+        {
+            spikeAni.SetBool("isOpen", true);
+            if (loopTask == null)
+            {
+                loopTask = new LoopTask
+                {
+                    interval = 0.2f,
+                    finishAction = () => { spikeCollider.enabled = true; }
+                };
+                loopTask.Start();
+            }
+        }
     }
-    
+
     public bool CheckCondition()
     {
         if (anyCondition)
@@ -35,6 +57,7 @@ public class LightSpike : MonoBehaviour
                     return true;
                 }
             }
+
             return false;
         }
         else
@@ -46,6 +69,7 @@ public class LightSpike : MonoBehaviour
                     return false;
                 }
             }
+
             return true;
         }
     }
