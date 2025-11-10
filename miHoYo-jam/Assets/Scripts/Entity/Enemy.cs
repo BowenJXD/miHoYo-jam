@@ -15,6 +15,7 @@ public class Enemy : MoveBehaviour
     [ShowInInspector] [ReadOnly] private int movedIndex = 0;
     public Rigidbody rb;
     public GameObject deathScreen;
+    public bool ignoreSpike;
 
     private bool canMove = true;
 
@@ -111,6 +112,7 @@ public class Enemy : MoveBehaviour
 
     public override void SetCanMove(bool canMove)
     {
+        if (ignoreSpike) return;
         this.canMove = canMove;
     }
 
