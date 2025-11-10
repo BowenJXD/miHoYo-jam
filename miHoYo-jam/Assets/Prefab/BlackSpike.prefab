@@ -263,7 +263,6 @@ GameObject:
   m_Component:
   - component: {fileID: 310300670170307526}
   - component: {fileID: 2016412270105218207}
-  - component: {fileID: 5702607902815504037}
   m_Layer: 0
   m_Name: BlackSpike
   m_TagString: Untagged
@@ -311,25 +310,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &5702607902815504037
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1700660192758103889}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1bbfcbe434c84e649197ba838362296f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  color: 0
-  conditions:
-  - {fileID: 0}
-  - {fileID: 0}
-  anyCondition: 0
-  spikeAni: {fileID: 2016412270105218207}
-  spikeCollider: {fileID: 4911515280873343051}
 --- !u!1 &1928529333409040300
 GameObject:
   m_ObjectHideFlags: 0

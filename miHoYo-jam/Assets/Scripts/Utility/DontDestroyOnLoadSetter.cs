@@ -9,7 +9,11 @@ public class DontDestroyOnLoadSetter : MonoBehaviour
     {
         foreach (var obj in objectsToPersist)
         {
-            DontDestroyOnLoad(obj);
+            if (GameObject.Find(obj.name) == null)
+            {
+                DontDestroyOnLoad(obj);
+                obj.SetActive(true);
+            }
         }
     }
 }
